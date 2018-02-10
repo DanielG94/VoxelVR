@@ -119,13 +119,15 @@ public class SwitchMode : MonoBehaviour {
 		
 		for (int i = 0; i < tools.Count; i++) {
 			// Get Random angle/position
-			Vector3 pos = CirclePosition(center, 0.3f, i);
+			//Vector3 pos = CirclePosition(center, 0.3f, i);
+			Vector3 pos = CirclePosition(Vector3.zero, 0.3f, i);
 			// make the object face the center
 			var rot = Quaternion.FromToRotation(Vector3.forward, center - pos);
 			_tempTools.Add(Instantiate(tools[i], pos, Quaternion.identity) as VRTK_InteractableObject);
 			_tempTools[i].transform.SetParent(TempToolContainer.transform);
 		}
-		TempToolContainer.transform.eulerAngles = new Vector3(0,GameObject.Find("Camera (eye)").transform.eulerAngles.y,0);
+		TempToolContainer.transform.localEulerAngles = new Vector3(0,GameObject.Find("Camera (eye)").transform.localEulerAngles.y,0);
+		TempToolContainer.transform.position = center;
 		TempToolContainer.transform.DetachChildren();
 		Destroy(TempToolContainer);
 	}
